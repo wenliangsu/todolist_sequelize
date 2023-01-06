@@ -19,7 +19,17 @@ app.use(methodOverride('_method'));
 
 //Section router
 app.get('/', (req, res) => {
-  res.send('hello word!');
+  return Todo.findAll({
+    raw: true,
+    nest: true,
+  })
+    .then((todos) => {
+      console.log(todos);
+      return res.render('index', { todos: todos });
+    })
+    .catch((error) => {
+      return res.status(422).json(error);
+    });
 });
 
 app.get('/users/login', (req, res) => {
