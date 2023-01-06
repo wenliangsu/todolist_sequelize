@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
+//note 在migrations跟models設定完後才可使用
 const db = require('../../models');
 const User = db.User;
 
+//Section router
 router.get('/login', (req, res) => {
   res.render('login');
 });
@@ -39,7 +41,12 @@ router.post('/register', (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
-  res.send('logout');
+  req.logout((error) => {
+    if (error) {
+      return next(error);
+    }
+  });
+  res.redirect('/users/login');
 });
 
 module.exports = router;

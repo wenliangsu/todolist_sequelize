@@ -3,16 +3,9 @@ const session = require('express-session');
 
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
-const bcrypt = require('bcryptjs');
+
 //passport 變數設定寫在session之後
 const usePassport = require('./config/passport');
-//臨時引用，所以先設定passport 的require
-const passport = require('passport');
-
-//note 在migrations跟models設定完後
-const db = require('./models');
-const Todo = db.Todo;
-const User = db.User;
 
 const routes = require('./routes');
 

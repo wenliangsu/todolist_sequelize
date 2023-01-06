@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+//note 在migrations跟models設定完後才可使用
 const db = require('../../models');
 const Todo = db.Todo;
 
