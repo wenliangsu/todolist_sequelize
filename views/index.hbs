@@ -10,6 +10,7 @@
         </h4>
       </div>
       <div class="col-auto">
+        {{!-- note mongoDB的id是使用自身資料庫規定設置的id 所以會寫成this._id, Sequelize則是使用建立好的id --}}
         <a class="btn btn-secondary" href="./todos/{{ this.id }}">detail</a>
         <a class="btn btn-success" href="./todos/{{ this.id }}/edit">edit</a>
         <form action="./todos/{{ this.id }}?_method=DELETE" method="POST" style="display: inline;">
