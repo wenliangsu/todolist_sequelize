@@ -28,6 +28,13 @@ app.use(
 //passport寫在路由之前
 usePassport(app);
 
+app.use((req, res, next) => {
+  // console.log(req.user);
+  res.locals.isAuthenticated = req.isAuthenticated();
+  res.locals.user = req.user;
+  next();
+});
+
 //Section router
 
 app.use(routes);
