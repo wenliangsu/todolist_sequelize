@@ -3,6 +3,7 @@ const session = require('express-session');
 
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
+const flash = require('connect-flash');
 
 //passport 變數設定寫在session之後
 const usePassport = require('./config/passport');
@@ -28,17 +29,20 @@ app.use(
 //passport寫在路由之前
 usePassport(app);
 
+app.use(flash());
+
 app.use((req, res, next) => {
-  // console.log(req.user);
   res.locals.isAuthenticated = req.isAuthenticated();
   res.locals.user = req.user;
+  //set the success and warning message
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.warning_msg = req.flash('warning_msg');
   next();
 });
 
-//Section router
-
 app.use(routes);
 
+//Section server listening
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`);
 });
