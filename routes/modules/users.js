@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-// const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 
 //note 在migrations跟models設定完後才可使用
 const db = require('../../models');
