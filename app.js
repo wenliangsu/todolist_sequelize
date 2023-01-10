@@ -5,13 +5,16 @@ const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 //passport 變數設定寫在session之後
 const usePassport = require('./config/passport');
 
 const routes = require('./routes');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 //Section middleware
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }));
@@ -20,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(
   session({
-    secret: 'ThisIsMySecret',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
   })
