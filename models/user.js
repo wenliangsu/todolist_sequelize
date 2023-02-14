@@ -5,13 +5,13 @@ module.exports = (sequelize, DataTypes) => {
     {
       name: DataTypes.STRING,
       email: DataTypes.STRING,
-      password: DataTypes.STRING,
+      password: DataTypes.STRING
     },
     {}
   );
   User.associate = function (models) {
     // associations can be defined here
-    //note 一個user有許多個todo
+    // note 一個user有許多個todo
     User.hasMany(models.Todo);
   };
   return User;

@@ -5,5 +5,5 @@ module.exports = {
     }
     req.flash('warning_msg', 'Please login first');
     res.redirect('/users/login');
-  },
+  }
 };

@@ -3,13 +3,13 @@ const router = express.Router();
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 
-//note 在migrations跟models設定完後才可使用
+// note 在migrations跟models設定完後才可使用
 const db = require('../../models');
 const User = db.User;
 
-//Section router
+// Section router
 
-//todo authenticate the user for login page
+// todo authenticate the user for login page
 router.get('/login', (req, res) => {
   res.render('login');
 });
@@ -18,7 +18,7 @@ router.post(
   '/login',
   passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/users/login',
+    failureRedirect: '/users/login'
   })
 );
 
@@ -26,12 +26,12 @@ router.get('/register', (req, res) => {
   res.render('register');
 });
 
-//todo check the userInfo at the register page
+// todo check the userInfo at the register page
 router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
   const errors = [];
 
-  //verify if the fields are correct or not
+  // verify if the fields are correct or not
   if (!name || !email || !password || !confirmPassword) {
     errors.push({ message: 'All fields are written necessarily' });
     console.log(errors);
@@ -48,12 +48,12 @@ router.post('/register', (req, res) => {
       name,
       email,
       password,
-      confirmPassword,
+      confirmPassword
     });
   }
 
   User.findOne({ where: { email } })
-    .then((user) => {
+    .then(user => {
       if (user) {
         errors.push({ message: 'The user already existed' });
         return res.render('register', {
@@ -61,23 +61,23 @@ router.post('/register', (req, res) => {
           name,
           email,
           password,
-          confirmPassword,
+          confirmPassword
         });
       }
 
       return bcrypt
         .genSalt(10)
-        .then((salt) => bcrypt.hash(password, salt))
-        .then((hash) => User.create({ name, email, password: hash }))
+        .then(salt => bcrypt.hash(password, salt))
+        .then(hash => User.create({ name, email, password: hash }))
         .then(() => res.redirect('/'))
-        .catch((error) => console.log(error));
+        .catch(error => console.log(error));
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 });
 
-//todo user logout
-router.get('/logout', (req, res) => {
-  req.logout((error) => {
+// todo user logout
+router.get('/logout', (req, res, next) => {
+  req.logout(error => {
     if (error) {
       return next(error);
     }
