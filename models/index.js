@@ -1,4 +1,3 @@
-// !!說明請看Craft
 'use strict';
 
 const fs = require('fs');
@@ -6,7 +5,7 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+const config = require(path.resolve(__dirname, '../config/config.json'))[env];
 const db = {};
 
 // 與資料庫連線
@@ -32,7 +31,7 @@ fs.readdirSync(__dirname)
     );
   })
   .forEach(file => {
-    const model = sequelize['import'](path.join(__dirname, file));
+    const model = sequelize.import(path.join(__dirname, file));
     db[model.name] = model;
   });
 
@@ -45,7 +44,7 @@ Object.keys(db).forEach(modelName => {
 });
 
 // 匯出需要的物件
-//note sequelize => 表示連線線資料庫的instance, Sequelize ==>存取Sequelize 這個class, 代表本身的函示庫
+// note sequelize => 表示連線線資料庫的instance, Sequelize ==>存取Sequelize 這個class, 代表本身的函示庫
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
