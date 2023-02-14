@@ -42,6 +42,7 @@ module.exports = (app) => {
     )
   );
 
+  //!! fb登入驗證部分 node.js的版本要用16會叫好，其他版本報錯
   passport.use(
     new FacebookStrategy(
       {
@@ -71,7 +72,7 @@ module.exports = (app) => {
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });
-  // deserialize
+   deserialize
   passport.deserializeUser((id, done) => {
     //note 此段和mongoose寫法不同，須將user的物件轉成plain object
     User.findByPk(id)

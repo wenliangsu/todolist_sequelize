@@ -28,7 +28,6 @@ router.get('/:id', (req, res) => {
       //note 將資料轉換成plain object的方式即使用 tableName.toJASON()
       .then((todo) => {
         //note 如果不轉成plain object的話，則物件的內容會很雜亂
-        // console.log(todo);
         res.render('detail', { todo: todo.toJSON() });
       })
       .catch((error) => console.log(error))

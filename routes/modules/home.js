@@ -17,7 +17,6 @@ router.get('/', (req, res) => {
 
     return Todo.findAll({ where: { UserId: userId }, raw: true, nest: true })
       .then((todos) => {
-        // console.log(todos);
         return res.render('index', { todos: todos });
       })
       .catch((error) => {
